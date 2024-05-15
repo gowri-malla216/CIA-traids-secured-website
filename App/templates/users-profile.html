@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Users / Profile - SWE681 Bootstrap Template</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    {% include 'metafiles.html' %}
+
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AamB-Te52PnmRJKM7rmroLZ_m7j9voNh9aqkqSkvBKx0kWX_64LqTwbBr9k8b8oXzi2S7LCHGu-b6umZ&vault=true&intent=subscription"
+            data-sdk-integration-source="button-factory"></script>
+
+    {% include 'alerts.html' %}
+
+</head>
+
+<body>
+
+{% include "header.html" %}
+
+{% include "sidenav.html" %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Profile</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index">Home</a></li>
+                <li class="breadcrumb-item">Users</li>
+                <li class="breadcrumb-item active">Profile</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+        <div class="row">
+            <div class="col-xl-4">
+
+                <div class="card">
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                        <img src="{{ pp }}" alt="Profile" class="rounded-circle">
+                        <h2>{{ username }}</h2>
+                        <h3>{{ role }}</h3>
+                        <div class="social-links mt-2">
+                            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-xl-8">
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">
+                                    Overview
+                                </button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit
+                                    Profile
+                                </button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#payment">Payments
+                                </button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">
+                                    Change Password
+                                </button>
+                            </li>
+
+                        </ul>
+                        <div class="tab-content pt-2">
+
+                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                <h5 class="card-title">Profile Details</h5>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                                    <div class="col-lg-9 col-md-8">{{ profile.username | safe }}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Company</div>
+                                    <div class="col-lg-9 col-md-8">{{ profile.company | safe }}</div>
+                                </div>
+{##}
+{#                                <div class="row">#}
+{#                                    <div class="col-lg-3 col-md-4 label">Job</div>#}
+{#                                    <div class="col-lg-9 col-md-8">{{ profile.job }}</div>#}
+{#                                </div>#}
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Email</div>
+                                    <div class="col-lg-9 col-md-8">{{ profile.email }}</div>
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+                                <!-- Profile Edit Form -->
+                                <form action="edit-profile" method="post">
+                                    {% csrf_token %}
+                                    <div class="row mb-3">
+                                        {#                                        <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile#}
+                                        {#                                            Image</label>#}
+                                        {#                                        <div class="col-md-8 col-lg-9">#}
+                                        {#                                            <img src="{{ pp }}" alt="Profile">#}
+                                        {#                                            <div class="pt-2">#}
+                                        {#                                                <a href="#" class="btn btn-primary btn-sm"#}
+                                        {#                                                   title="Upload new profile image"><i class="bi bi-upload"></i></a>#}
+                                        {#                                                <a href="#" class="btn btn-danger btn-sm"#}
+                                        {#                                                   title="Remove my profile image"><i class="bi bi-trash"></i></a>#}
+                                        {#                                            </div>#}
+                                        {#                                        </div>#}
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="username" type="text" class="form-control" id="username"
+                                                   value="{{ profile.username }}">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row mb-3">
+                                        <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="company" type="text" class="form-control" id="company"
+                                                   value="{{ profile.company }}">
+                                        </div>
+                                    </div>
+{##}
+{#                                    <div class="row mb-3">#}
+{#                                        <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>#}
+{#                                        <div class="col-md-8 col-lg-9">#}
+{#                                            <input name="job" type="text" class="form-control" id="Job"#}
+{#                                                   value="{{ profile.job }}">#}
+{#                                        </div>#}
+{#                                    </div>#}
+
+                                    <div class="row mb-3">
+                                        <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="email" type="password" class="form-control" id="Email"
+                                                   value="{{ profile.email }}" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
+                                </form><!-- End Profile Edit Form -->
+
+                            </div>
+
+                            <div class="tab-pane fade pt-3" id="payment">
+
+                                <!-- Settings Form -->
+                                {% if not profile.subscriber %}
+                                    <div id="paypal-button-container-P-5YC382822J373372HMTATEAQ"
+                                         class="col-lg-6 mx-auto">
+                                        <form method="post" action="payment" id="paymentform">
+                                            {% csrf_token %}
+                                            <input type="hidden" id="subscriptionID" name="subscriptionID">
+                                        </form>
+                                        <h5 class="card-title" style="text-align: center">Choose a payment method</h5>
+                                        <script>
+                                            paypal.Buttons({
+                                                style: {
+                                                    shape: 'rect',
+                                                    color: 'silver',
+                                                    layout: 'vertical',
+                                                    label: 'subscribe'
+                                                },
+                                                createSubscription: function (data, actions) {
+                                                    return actions.subscription.create({
+                                                        /* Creates the subscription */
+                                                        plan_id: 'P-5YC382822J373372HMTATEAQ'
+                                                    });
+                                                },
+                                                onApprove: function (data, actions) {
+                                                    $("#subscriptionID").val(data.subscriptionID);
+                                                    $("#paymentform").submit();
+                                                }
+                                            }).render('#paypal-button-container-P-5YC382822J373372HMTATEAQ'); // Renders the PayPal button
+                                        </script>
+                                    </div>
+                                {% else %}
+                                    <form action="cancelsub" method="post">
+                                        {% csrf_token %}
+                                        <div class="row mb-3">
+                                            <h5 class="card-title" style="text-align: center">Subscription Settings</h5>
+
+                                            <div class="col-md-8 col-lg-9 mx-auto mb-3">
+
+                                                <label class="form-check-label" for="changesMade">
+                                                    <b>Subscription Status :</b> <i class="bi bi-check-circle-fill"
+                                                                                    style="color: green"></i> Active
+                                                </label>
+                                                <br>
+                                                <label class="form-check-label" for="changesMade">
+                                                    <b>Iframe Link :</b> <a
+                                                        href="http{% if request.is_secure %}s{% endif %}://{{ request.get_host }}/GroziitDynamicSpace?data={{ iframe }}"
+                                                        style="width:150px;overflow: scroll">Click here!</a>
+                                                </label>
+
+                                            </div>
+
+                                            <div class="col-md-8 col-lg-9 mx-auto">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="changesMade">
+                                                    <label class="form-check-label" for="changesMade">
+                                                        Cancel Subscription
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </form><!-- End settings Form -->
+                                {% endif %}
+                            </div>
+
+                            <div class="tab-pane fade pt-3" id="profile-change-password">
+                                <!-- Change Password Form -->
+                                <form action="change-password" method="post">
+
+                                    <div class="row mb-3">
+                                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current
+                                            Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="password" type="password" class="form-control"
+                                                   id="currentPassword">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New
+                                            Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="newpassword" type="password" class="form-control"
+                                                   id="newPassword">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New
+                                            Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="renewpassword" type="password" class="form-control"
+                                                   id="renewPassword">
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Change Password</button>
+                                    </div>
+                                </form><!-- End Change Password Form -->
+
+                            </div>
+
+                        </div><!-- End Bordered Tabs -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer id="footer" class="footer">
+    <div class="copyright">
+        &copy; Copyright <strong><span>SWE681</span></strong>. All Rights Reserved
+    </div>
+
+</footer><!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="../static/assets/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="../static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../static/assets/vendor/chart.js/chart.umd.js"></script>
+<script src="../static/assets/vendor/echarts/echarts.min.js"></script>
+<script src="../static/assets/vendor/quill/quill.min.js"></script>
+<script src="../static/assets/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="../static/assets/vendor/tinymce/tinymce.min.js"></script>
+<script src="../static/assets/vendor/php-email-form/validate.js"></script>
+
+<!-- Template Main JS File -->
+<script src="../static/assets/js/main.js"></script>
+<script>
+    if (window.location.hash) {
+        var hash = window.location.hash.substring(1);
+        $('button[data-bs-target="#' + hash + '"]').click();
+    }
+</script>
+
+</body>
+
+</html>
