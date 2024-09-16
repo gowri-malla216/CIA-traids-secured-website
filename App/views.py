@@ -4,7 +4,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .models import *
 from cryptography.fernet import Fernet
-import random
 import datetime
 import requests
 from django import template
@@ -12,11 +11,11 @@ from django.utils import timezone
 from django.core.mail import send_mail
 from django.conf import settings
 import math
-import random
 import schedule
 import bcrypt
 import hmac
 import hashlib
+import secrets
 
 iframe = 'ET-fOTwEB78NHvQF2wGouthaMjg5uYMT-MrpDnKrq8c='
 key_public = None
@@ -39,8 +38,8 @@ primes=sieveoferatosthenes()[5:]
 
 def keys_init():
     global primes, key_public, key_private
-    p= primes[random.randint(0,len(primes))]
-    q= primes[random.randint(0,len(primes))]
+    p= primes[secrets.SystemRandom().randint(0,len(primes))]
+    q= primes[secrets.SystemRandom().randint(0,len(primes))]
 
     n = p*q
     phi = (p - 1) * (q - 1)
@@ -50,7 +49,7 @@ def keys_init():
         if math.gcd(e,phi)==1:
             e_values.append(e)
 
-    e = e_values[random.randint(0,len(e_values))]
+    e = e_values[secrets.SystemRandom().randint(0,len(e_values))]
     d=None
 
     for i in range(phi):
@@ -638,12 +637,9 @@ def change_password(request):
         return HttpResponseRedirect(request, "pages-profile")
 
 
-from random import randrange
-
-
 def get_otp(request):
     try:
-        otp = "".join([str(randrange(0, 10)) for i in range(6)])
+        otp = "".join([str(secrets.SystemRandom().randrange(0, 10)) for i in range(6)])
         msg = f"""{otp}"""
         profile = Profiles.objects.get(email=request.POST['email'])
         profile.otp = otp + "," + str(time.time())
