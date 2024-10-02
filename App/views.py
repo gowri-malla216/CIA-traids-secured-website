@@ -570,7 +570,7 @@ def cancelsub(request):
             'https://api-m.sandbox.paypal.com/v1/billing/subscriptions/' + user.subscriber_id + '/cancel',
             headers=headers,
             json=json_data,
-        )
+        timeout=60)
 
         print(user.subscriber_id)
         print(response.status_code)
