@@ -26,19 +26,19 @@ A secure Job Posting Platform built with Django, integrating advanced security m
 - Users receive a one-time password (OTP) via email for secure login.
 - Ensures no password leaks by avoiding static credentials.
 
-1. Password Hashing with Salt
+2. Password Hashing with Salt
 - Uses bcrypt for encrypting passwords before storage.
 - Each password is hashed with a unique salt to prevent rainbow table attacks.
 
-1. On-Screen Keyboard for Login Security
+3. On-Screen Keyboard for Login Security
 - Prevents keyloggers from capturing user credentials.
 - Randomized layout on every login attempt.
 
-1. CSRF Protection
+4. CSRF Protection
 - Cross-Site Request Forgery (CSRF) tokens used for all form submissions.
 - Prevents unauthorized actions from malicious websites.
 
-1. Public-Private Key Encryption
+5. Public-Private Key Encryption
 - Uses asymmetric encryption for sensitive data transmission.
 - Prevents MITM (Man-in-the-Middle) attacks on login sessions.
 
